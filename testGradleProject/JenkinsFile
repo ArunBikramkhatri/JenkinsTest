@@ -3,13 +3,17 @@ pipeline {
 
     stages{
         stage('Build'){
-            dir('testGradleProject'){
-                sh './gradlew clean build'
+            steps {
+                dir('testGradleProject'){
+                    sh './gradlew clean build'
+                }
             }
 
         stage('Test'){
-              dir('testGradleProject'){
-                sh './gradlew test'
+            steps{
+                dir('testGradleProject'){
+                    sh './gradlew test'
+                }
               }
            }
         }
