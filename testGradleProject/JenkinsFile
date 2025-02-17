@@ -4,11 +4,11 @@ pipeline {
     stages{
         stage('Build'){
             steps {
-                dir('testGradleProject'){
-                    sh './gradlew clean build'
+                    dir('testGradleProject'){
+                        sh './gradlew clean build'
+                   }
                 }
             }
-
         stage('Test'){
             steps{
                 dir('testGradleProject'){
@@ -17,5 +17,4 @@ pipeline {
               }
            }
         }
-    }
 }
