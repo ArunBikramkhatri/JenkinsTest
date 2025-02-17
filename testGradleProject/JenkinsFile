@@ -20,10 +20,11 @@ pipeline {
 
     post{
         success {
-            emailext subject:"jenkins build status" ,
-                      body: "build successful",
-                      to:'khatriarun221@gmail.com'
-
+            sh '''
+                    curl -X POST -H "Content-Type: application/json" \
+                    -d '{"content": "✅ Build Succeeded! Job: passed"}' \
+                   https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
+                    '''
         }
         failure {
             emailext subject:"jenkins build status",
