@@ -1,0 +1,17 @@
+pipline {
+    agent any
+
+    stages{
+        stage('Build'){
+            dir('testGradleProject'){
+                sh './gradlew clean build'
+            }
+
+        stage('Test'){
+              dir('testGradleProject'){
+                sh './gradlew test'
+              }
+           }
+        }
+    }
+}
