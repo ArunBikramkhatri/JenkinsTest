@@ -1,0 +1,14 @@
+node {
+    try {
+        stage('Build'){
+            echo "building"
+            sh './gradlew build'
+        }
+        stage('Test') {
+            echo "testing"
+            sh './gradlew test'
+        }
+    } catch (Exception ex) {
+         echo "Pipeline failed: ${e.getMessage()}"
+    }
+}
