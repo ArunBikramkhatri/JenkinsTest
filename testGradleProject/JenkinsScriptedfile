@@ -1,18 +1,19 @@
 node {
-    try {
-        stage('Build'){
-            dir('/testGradleProject') {
+    try{
+        stage('Build') {
+            dir('/testGradleProject'){
                 echo "building"
                 sh './gradlew build'
             }
         }
-        stage('Test') {
-           dir('/testGradleProject'){
+        stage('Test'){
+            dir('/testGradleProject'){
                 echo "testing"
                 sh './gradlew test'
             }
         }
-    } catch (Exception ex) {
-         echo "Pipeline failed: ${ex.getMessage()}"
+    }catch(Exception ex){
+        echo "pipeline failed : ${ex.getMessage()}"
     }
+
 }
