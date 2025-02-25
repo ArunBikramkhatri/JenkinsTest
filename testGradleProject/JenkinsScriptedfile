@@ -1,13 +1,13 @@
 node {
     try{
         stage('Build') {
-            dir('/testGradleProject'){
+            dir('testGradleProject/'){
                 echo "building"
                 sh './gradlew build'
             }
         }
         stage('Test'){
-            dir('/testGradleProject'){
+            dir('testGradleProject/'){
                 echo "testing"
                 sh './gradlew test'
             }
