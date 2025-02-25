@@ -1,7 +1,10 @@
-FROM python:3.9
+FROM alpine:latest
 
-WORKDIR app/
+WORKDIR /app 
 
-COPY . . 
+COPY . .
 
-CMD ["python" , "test.py"]
+CMD ["echo" ,"hello world"]
+
+RUN apk add curl
+RUN apk add bash
