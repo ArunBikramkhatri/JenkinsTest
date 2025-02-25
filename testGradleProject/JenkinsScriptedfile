@@ -12,17 +12,25 @@ node {
                 sh './gradlew test'
             }
         }
-        post {
-            success {
-                sh '''
-                    curl -X POST -H "Content-Type: application/json" \
-                    -d '{"content": "Build successful"}' \
-                     https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
-                '''
-            }
+
+        stage('Notify success'){
+            sh '''
+                curl -X POST -H "Content-Type: application/json" \
+                -d '{"content" : "Build successful"}' \
+                  https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
+
+            '''
         }
     }catch(Exception ex){
         echo "pipeline failed : ${ex.getMessage()}"
+        stage('Notify failure') {
+            sh '''
+                curl -X POST -H "Content-Type: application/json" \
+                -d '{"content": "Build failed"}' \
+                  https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
+
+             '''
+        }
     }
 
 }
