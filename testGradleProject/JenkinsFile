@@ -33,6 +33,14 @@ pipeline {
                         sleep 10
                     }
                   }
+                stage('Branch test') {
+                    when {
+                        branch 'test'
+                    }
+                    steps {
+                        echo 'running in test branch'
+                    }
+                }
                 }
             }
     }
