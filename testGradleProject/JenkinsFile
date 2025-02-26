@@ -2,24 +2,28 @@ pipeline {
     agent any
 
     stages{
-        stage('Build'){
-            steps {
-                    dir('testGradleProject'){
-                        sh './gradlew clean build'
-                        sleep 10
+        stage('Parallel build') {
+
+            parallel{
+                stage('Build'){
+                    steps {
+                            dir('testGradleProject'){
+                                sh './gradlew clean build'
+                                sleep 10
+                           }
+                        }
+                    }
+                stage('Test'){
+                    steps{
+                        dir('testGradleProject'){
+                            sh './gradlew test'
+                            sleep 10
+                        }
+                      }
                    }
                 }
             }
-        stage('Test'){
-            steps{
-                dir('testGradleProject'){
-                    sh './gradlew test'
-                    sleep 10
-                }
-              }
-           }
-        }
-
+    }
     post{
         success {
             sh '''
