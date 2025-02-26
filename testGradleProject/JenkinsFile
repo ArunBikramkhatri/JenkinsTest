@@ -1,57 +1,58 @@
 pipeline {
     agent any
 
-    stages{
+    stages {
         stage('Parallel build') {
-
-            parallel{
-                stage('Build'){
+            parallel {
+                stage('Build') {
                     steps {
-                            dir('testGradleProject'){
-                                sh './gradlew clean build'
-                           }
+                        dir('testGradleProject') {
+                            sh './gradlew clean build'
                         }
                     }
-                stage('Test'){
-                    steps{
-                        dir('testGradleProject'){
+                }
+                stage('Test') {
+                    steps {
+                        dir('testGradleProject') {
                             sh './gradlew test'
                         }
-                      }
-                   }
+                    }
+                }
                 stage('Test 2') {
-                    steps{
+                    steps {
                         echo "running test 2"
                     }
                 }
-                stage('Test 3'){
-                    steps{
+                stage('Test 3') {
+                    steps {
                         echo "running test 3"
                     }
-                  }
-                stage('Branch test') {
-                    when {
-                        branch 'test'
-                    }
-                    steps {
-                        echo 'running in test branch'
-                    }
-                }
                 }
             }
+        }
+
+        stage('Branch test') {
+            when {
+                branch 'test'
+            }
+            steps {
+                echo 'running in test branch'
+            }
+        }
     }
-    post{
+
+    post {
         success {
             sh '''
-                    curl -X POST -H "Content-Type: application/json" \
-                    -d '{"content": "✅ Build Succeeded! Job: passed"}' \
-                   https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
-                    '''
+                curl -X POST -H "Content-Type: application/json" \
+                -d '{"content": "✅ Build Succeeded! Job: passed"}' \
+                https://discord.com/api/webhooks/1341087406702723082/lp8JylULSRrdXExzzDcbrTj11UOaYMRioKU-zxWLj8-wAwdICmrZ8E92glaWTJj3PpHz
+            '''
         }
         failure {
-            emailext subject:"jenkins build status",
-                      body:"build failure",
-                      to:'khatriarun221@gmail.com'
+            emailext subject: "jenkins build status",
+                      body: "build failure",
+                      to: 'khatriarun221@gmail.com'
         }
     }
 }
