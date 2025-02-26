@@ -21,6 +21,18 @@ pipeline {
                         }
                       }
                    }
+                stage('Test 2') {
+                    steps{
+                        echo "running test 2"
+                        sleep 10
+                    }
+                }
+                stage('Test 3'){
+                    steps{
+                        echo "running test 3"
+                        sleep 10
+                    }
+                  }
                 }
             }
     }
