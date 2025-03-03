@@ -1,7 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        TEST_ID = credentials('TEST_ID')
+    }
     stages {
+
+        stage('Fetch id'){
+            steps{
+                sh 'echo "id is $TEST_ID" '
+            }
+        }
         stage('Parallel build') {
             parallel {
                 stage('Build') {
@@ -28,15 +37,6 @@ pipeline {
                         echo "running test 3"
                     }
                 }
-            }
-        }
-
-        stage('Branch test') {
-            when {
-                branch 'test'
-            }
-            steps {
-                echo 'running in test branch'
             }
         }
     }
