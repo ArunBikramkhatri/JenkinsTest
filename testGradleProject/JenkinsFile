@@ -39,6 +39,13 @@ pipeline {
                 }
             }
         }
+        stage('save artifact') {
+            steps {
+                dir('testGradleProject'){
+                    archiveArtifacts artifacts: 'app/build/libs/*.jar' , fingerprint: true
+                }
+            }
+        }
     }
 
     post {
