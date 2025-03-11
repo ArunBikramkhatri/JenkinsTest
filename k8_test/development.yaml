@@ -1,0 +1,6 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+    name: test_k8_flask
+spec:
+  replica: 2
